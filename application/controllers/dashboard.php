@@ -38,19 +38,7 @@ class Dashboard extends CI_Controller
 		$this->data = array(
 			'title' => "PKL GIS: Location"
 		);
-		//$marker = array();
-		//$marker['draggable'] = true;
-		//$marker['ondragend'] = 'setMapToForm(event.latLng.lat(), event.latLng.lng());';
-		//$config['center'] = '-0.4959538,117.1562388';
-		//$config['zoom'] = 'auto';
-		//$config['places'] = TRUE;
-		//$config['placesAutocompleteInputID'] = 'pac-input';
-		//$config['placesAutocompleteBoundsMap'] = TRUE; // set results biased towards the maps viewport
-		//$config['placesAutocompleteOnChange'] = "";
-        //$this->googlemaps->add_marker($marker);
-		//$this->googlemaps->initialize($config);
-		//$this->data['map'] = $this->googlemaps->create_map();
-
+		
 		$this->data['province'] = $this->m_jenis->getProvinces();
 		$this->data['jenis'] = $this->m_jenis->getall();
 
@@ -65,6 +53,16 @@ class Dashboard extends CI_Controller
 		);	
 
 		$this->load->view('pages/mahasiswa-content', $this->data);
+
+	}
+
+	public function jenislokasi()
+	{
+		$this->data = array(
+			'title' => "PKL GIS: Jenis Lokasi"
+		);	
+
+		$this->load->view('pages/jenis-content', $this->data);
 
 	}
 

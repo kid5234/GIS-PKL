@@ -77,6 +77,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
+              <li <?php if($this->uri->segment( $this->uri->total_segments())=="jenislokasi" ){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/jenislokasi')?>"><i class="fa fa-circle-o"></i> Jenis Lokasi</a></li>
               <li <?php if($this->uri->segment( $this->uri->total_segments())=="addlocation"){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/addlocation')?>"><i class="fa fa-circle-o"></i> Tambah Lokasi</a></li>
               <li <?php if($this->uri->segment( $this->uri->total_segments())=="location" ){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/location')?>"><i class="fa fa-circle-o"></i> List Lokasi</a></li>
             </ul>
