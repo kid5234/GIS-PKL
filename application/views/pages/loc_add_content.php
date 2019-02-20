@@ -6,13 +6,13 @@ $this->load->view('pages/required/head-min', $this->data);
 <style type="text/css">
  /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
-/* Optional: Makes the sample page fill the window. */
-html, body {
+ /* Optional: Makes the sample page fill the window. */
+ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
- #map {
+#map {
   height: 100%;
 }
 #description {
@@ -117,21 +117,21 @@ html, body {
               <div class="form-group">
                 <label class="control-label col-md-2">Place ID</label>
                 <div class="col-md-10">
-                  <input name="nim" placeholder="NIM .." class="form-control" type="text">
+                  <input id="placeid" name="placeid" placeholder="Place ID .." class="form-control" type="text">
                   <span class="help-block"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label col-md-2">Nama</label>
                 <div class="col-md-10">
-                  <input name="nama" placeholder="Nama .." class="form-control" type="text">
+                  <input id="nama" name="nama" placeholder="Nama .." class="form-control" type="text">
                   <span class="help-block"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label col-md-2">Alamat</label>
                 <div class="col-md-10">
-                  <textarea name="alamat" placeholder="Alamat .." class="form-control"></textarea>
+                  <textarea id="alamat" name="alamat" placeholder="Alamat .." class="form-control"></textarea>
                   <span class="help-block"></span>
                 </div>
               </div>
@@ -185,6 +185,20 @@ html, body {
                   <span class="help-block"></span>
                 </div>
               </div>
+              <div class="form-group">
+                <label class="control-label col-md-2">Latitude</label>
+                <div class="col-md-10">
+                  <input id="lat" name="lat" placeholder="Latitude .." class="form-control" type="text">
+                  <span class="help-block"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-2">Longitude</label>
+                <div class="col-md-10">
+                  <input id="lng" name="lng" placeholder="Longitude .." class="form-control" type="text">
+                  <span class="help-block"></span>
+                </div>
+              </div>
               <hr>
               <div class="col-md-12">
                 <button type="button" id="btnSave" onclick="save()" class="btn btn-primary pull-right">Save</button>
@@ -194,9 +208,15 @@ html, body {
           </form>
         </div>
         <div class="col-md-6">
+          <label class="control-label col-md-10">Setelah melakukan pencarian, klik marker untuk mengambil data lokasi ke form</label>
           <input type="text" id="pac-input" placeholder="Search Here" />
-            <div id="map" style="height: 400px; width: 100%;"></div>
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete"
+          <div id="map" style="height: 400px; width: 100%;"></div>
+          <div id="infowindow-content">
+            <img src="" width="16" height="16" id="place-icon">
+            <span id="place-name"  class="title"></span><br>
+            <span id="place-address"></span>
+          </div>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete&language=id&region=ID"
           async defer></script>
           <script type="text/javascript">
            // This example adds a search box to a map, using the Google Place Autocomplete
@@ -217,7 +237,12 @@ html, body {
             // Create the search box and link it to the UI element.
             var input = document.getElementById('pac-input');
             var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+
+            var bounds = new google.maps.LatLngBounds();
+            var infowindow = new google.maps.InfoWindow();
+            var infowindowContent = document.getElementById('infowindow-content');
+            infowindow.setContent(infowindowContent);
 
             // Bias the SearchBox results towards current map's viewport.
             map.addListener('bounds_changed', function() {
@@ -241,8 +266,8 @@ html, body {
               markers = [];
 
               // For each place, get the icon, name and location.
-              var bounds = new google.maps.LatLngBounds();
-              var infowindow = new google.maps.InfoWindow();
+
+              infowindow.close();
               places.forEach(function(place) {
 
                 if (!place.geometry) {
@@ -256,19 +281,38 @@ html, body {
                   anchor: new google.maps.Point(17, 34),
                   scaledSize: new google.maps.Size(25, 25)
                 };
-
+                var id = place.place_id;
+                var name = place.name;
+                var lat = place.geometry.location.lat();
+                var lng = place.geometry.location.lng();
+                var address = '';
+                if (place.address_components) {
+                  address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+                  ].join(' ');
+                }
                 // Create a marker for each place.
                 var marker = new google.maps.Marker({
                   map: map,
                   position: place.geometry.location
                 });
+
+                infowindowContent.children['place-icon'].src = place.icon;
+                infowindowContent.children['place-name'].textContent = place.name;
+                infowindowContent.children['place-address'].textContent = address;
+                infowindow.open(map, marker);
                 google.maps.event.addListener(marker, 'click', function() {
-                  infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-                    'Place ID: ' + place.place_id + '<br>' +
-                    place.formatted_address + '<br>' +
-                    place.geometry.location.lat() + '<br>' +
-                    place.geometry.location.lng() + '</div>');
+                  infowindowContent.children['place-icon'].src = place.icon;
+                  infowindowContent.children['place-name'].textContent = place.name;
+                  infowindowContent.children['place-address'].textContent = address;
                   infowindow.open(map, this);
+                  document.getElementById('placeid').value = id;
+                  document.getElementById('nama').value = name;
+                  document.getElementById('alamat').value = address;
+                  document.getElementById('lat').value = lat;
+                  document.getElementById('lng').value = lng;
                 });
 
                 if (place.geometry.viewport) {

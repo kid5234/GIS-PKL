@@ -1,16 +1,20 @@
-###################
-What is CodeIgniter
-###################
+## SIG PKL V1
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+SIG PKL adalah GIS berbasis web yang dibangun dengan PHP Framework CodeIgniter dan Google Maps API V3, untuk memenuhi tugas akhir Skripsi.
 
-*******************
-Release Information
-*******************
+Web ini menggunakan template AdminLTE sebagai admin dashboard dan mobirise template sebagai tampilan halaman utama.
+
+## Features
+- Mudah untuk dipelajari dan diperbarui
+- Tampilan yang responsive dan adaptive, sudah di tes dengan beberapa device dan ukuran layar.
+- Dynamic title, description and footer note
+- fully customizeable from admin dashboard
+- Tema untuk dashboard admin
+- server side paging
+- filter data per kategori atau field
+- secure password saving with CI hash()
+- input data lokasi melalui pencarian pada google maps
+
+
+## Installation
 
