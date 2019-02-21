@@ -69,10 +69,9 @@ class Dosen_c extends CI_Controller {
 	{
 		$this->_validate();
 		$data = array(
-			'nip' => $this->input->post('nip'),
 			'dosen_nama' => $this->input->post('nama'),
 			'dosen_alamat' => $this->input->post('alamat'),
-			'dosen_notelp' => $this->input->post('notelp'),
+			'dosen_notelp' => $this->input->post('telepon'),
 			'dosen_jabatan' => $this->input->post('jabatan'),
 		);
 		$this->dosen->update(array('nip' => $this->input->post('nip')), $data);

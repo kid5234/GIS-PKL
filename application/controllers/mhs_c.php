@@ -26,7 +26,6 @@ class Mhs_c extends CI_Controller {
 			$row[] = $mhs->mhs_nama;
 			$row[] = $mhs->mhs_alamat;
 			$row[] = $mhs->mhs_notelp;
-			// $row[] = $mhs->mhs_kelas;
 
 			//add html for action
 			$row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$mhs->nim."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
@@ -59,7 +58,6 @@ class Mhs_c extends CI_Controller {
 			'mhs_nama' => $this->input->post('nama'),
 			'mhs_alamat' => $this->input->post('alamat'),
 			'mhs_notelp' => $this->input->post('telepon'),
-			'mhs_kelas' => $this->input->post('kelas'),
 		);
 		$insert = $this->mhs->save($data);
 		echo json_encode(array("status" => TRUE));
@@ -72,8 +70,7 @@ class Mhs_c extends CI_Controller {
 			'nim' => $this->input->post('nim'),
 			'mhs_nama' => $this->input->post('nama'),
 			'mhs_alamat' => $this->input->post('alamat'),
-			'mhs_notelp' => $this->input->post('notelp'),
-			'mhs_kelas' => $this->input->post('kelas'),
+			'mhs_notelp' => $this->input->post('telepon'),
 		);
 		$this->mhs->update(array('nim' => $this->input->post('nim')), $data);
 		echo json_encode(array("status" => TRUE));

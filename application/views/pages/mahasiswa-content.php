@@ -106,8 +106,6 @@ var table;
 
 $(document).ready(function() {
 
-    $('[data-mask]').inputmask()
-
     //datatables
     table = $('#table').DataTable({ 
 
@@ -308,20 +306,8 @@ function add_person()
                     <div class="input-group-addon">
                       <i class="fa fa-phone"></i>
                     </div>
-                    <input type="text" name="telepon" class="form-control"
-                    data-inputmask='"mask": "(9999) 9999-9999"' data-mask>
+                    <input type="text" name="telepon" class="form-control">
                   </div>
-                  <span class="help-block"></span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label col-md-3">Kelas</label>
-                <div class="col-md-9">
-                  <select name="kelas" class="form-control">
-                    <option value="">--Select Kelas--</option>
-                    <option value="a">A</option>
-                    <option value="b">B</option>
-                  </select>
                   <span class="help-block"></span>
                 </div>
               </div>

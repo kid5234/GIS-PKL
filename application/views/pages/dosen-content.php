@@ -108,8 +108,6 @@ var table;
 
 $(document).ready(function() {
 
-    $('[data-mask]').inputmask()
-
     //datatables
     table = $('#table').DataTable({ 
 
@@ -155,6 +153,7 @@ function add_person()
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
+     $('[name="nip"]').prop("readonly", false);
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Data Dosen'); // Set Title to Bootstrap modal title
   }
@@ -232,15 +231,12 @@ function add_person()
                 }
             $('#btnSave').text('save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
-
-
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
             alert('Error adding / update data');
             $('#btnSave').text('save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
-
           }
         });
   }
@@ -311,7 +307,7 @@ function add_person()
                       <i class="fa fa-phone"></i>
                     </div>
                     <input type="text" name="telepon" class="form-control"
-                    data-inputmask='"mask": "(9999) 9999-9999"' data-mask>
+                    data-inputmask="'mask': ['(9999)-9999-9999', '(999)-9999-9999']" data-mask>
                   </div>
                   <span class="help-block"></span>
                 </div>

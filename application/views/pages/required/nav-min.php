@@ -69,7 +69,7 @@
               <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
           </li>
-          <li <?php if($this->uri->segment( $this->uri->total_segments())=="location" or $this->uri->segment( $this->uri->total_segments())=="addlocation"){echo 'class="treeview active menu-open"';} else {echo 'class="treeview"';}?>>
+          <li <?php if($this->uri->segment( $this->uri->total_segments())=="location" or $this->uri->segment( $this->uri->total_segments())=="addlocation" or $this->uri->segment( $this->uri->total_segments())=="jenislokasi"){echo 'class="treeview active menu-open"';} else {echo 'class="treeview"';}?>>
             <a href="">
               <i class="fa fa-globe"></i> <span>Lokasi</span>
               <span class="pull-right-container">
@@ -100,8 +100,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li <?php if($this->uri->segment( $this->uri->total_segments())=="addpkl"){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/addpkl')?>"><i class="fa fa-circle-o"></i> Tambah Lokasi</a></li>
-              <li <?php if($this->uri->segment( $this->uri->total_segments())=="pkl" ){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/pkl')?>"><i class="fa fa-circle-o"></i> List Lokasi</a></li>
+              <li <?php if($this->uri->segment( $this->uri->total_segments())=="addpkl"){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/addpkl')?>"><i class="fa fa-circle-o"></i> Tambah Kelompok</a></li>
+              <li <?php if($this->uri->segment( $this->uri->total_segments())=="pkl" ){echo 'class="active"';}?>><a href="<?php echo base_url('dashboard/pkl')?>"><i class="fa fa-circle-o"></i> List Kelompok PKL</a></li>
             </ul>
           </li>
         </ul>

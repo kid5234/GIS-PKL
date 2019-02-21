@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_mhs extends CI_Model {
 
 	var $table = 'mhs_data';
-	var $column_order = array('nim','mhs_nama','mhs_alamat','mhs_notelp','mhs_kelas'); //set column field database for datatable orderable
+	var $column_order = array('nim','mhs_nama','mhs_alamat','mhs_notelp'); //set column field database for datatable orderable
 	var $column_search = array('nim','mhs_nama','mhs_alamat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('nim' => 'desc'); // default order 
 

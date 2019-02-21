@@ -6,7 +6,7 @@ class M_dosen extends CI_Model {
 	var $table = 'dosen_data';
 	var $column_order = array('nip','dosen_nama','dosen_alamat','dosen_notelp','dosen_jabatan'); //set column field database for datatable orderable
 	var $column_search = array('nip','dosen_nama','dosen_alamat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('nip' => 'desc'); // default order 
+	var $order = array('nip' => 'asc'); // default order 
 
 	public function __construct()
 	{
