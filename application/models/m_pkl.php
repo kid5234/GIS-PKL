@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_loc extends CI_Model {
+class M_pkl extends CI_Model {
 
-	var $table = 'loc_data';
+	var $table = 'pkl_data';
 	var $column_order = array('loc_nama','loc_alamat','loc_prov_name','loc_reg_name','loc_category_id'); //set column field database for datatable orderable
 	var $column_search = array('loc_nama','loc_alamat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('nim' => 'desc'); // default order 
@@ -81,7 +81,7 @@ class M_loc extends CI_Model {
 	public function get_by_id($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('loc_id',$id);
+		$this->db->where('nim',$id);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -101,7 +101,7 @@ class M_loc extends CI_Model {
 
 	public function delete_by_id($id)
 	{
-		$this->db->where('loc_id', $id);
+		$this->db->where('nim', $id);
 		$this->db->delete($this->table);
 	}
 

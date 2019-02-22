@@ -6,6 +6,8 @@ class Jenis_c extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->has_userdata('admin_login')==FALSE) 
+			redirect(site_url());
 		$this->load->model('m_jenis','jenis');
 	}
 
