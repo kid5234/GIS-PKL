@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_loc extends CI_Model {
 
 	var $table = 'loc_data';
-	var $column_order = array('loc_nama','loc_alamat','loc_prov_name','loc_reg_name','loc_category_id'); //set column field database for datatable orderable
+	var $column_order = array('loc_nama','loc_alamat','loc_category_name','kotakab','provinsi'); //set column field database for datatable orderable
 	var $column_search = array('loc_nama','loc_alamat'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('nim' => 'desc'); // default order 
+	var $order = array('loc_nama' => 'desc'); // default order 
 
 	public function __construct()
 	{
@@ -57,10 +57,10 @@ class M_loc extends CI_Model {
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
-		$this->db->select('*');    
-		$this->db->from('loc_data');
-		$this->db->join('provinces p', 'loc_data.loc_prov_id = provinces.id' ,'left');
-		$this->db->join('regencies r', 'loc_data.loc_reg_id = regencies.id', 'left');
+		$this->db->select('loc_id, loc_nama, loc_alamat, loc_category.loc_category_name, provinces.name as provinsi, regencies.name as kotakab, loc_lat, loc_lang'); 
+		$this->db->join('loc_category', 'loc_data.loc_category_id = loc_category.loc_category_id' ,'left');
+		$this->db->join('provinces', 'loc_data.loc_prov_id = provinces.id' ,'left');
+		$this->db->join('regencies', 'loc_data.loc_reg_id = regencies.id', 'left');
 		$query = $this->db->get();
 		return $query->result();
 	}

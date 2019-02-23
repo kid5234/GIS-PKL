@@ -9,10 +9,6 @@ class User extends CI_Controller
 		$this->load->library('session');
 	}
 
-	public function index()
-	{
-		
-	}
 	//login rule
 	public function auth()
 	{

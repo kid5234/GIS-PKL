@@ -11,11 +11,6 @@ class Jenis_c extends CI_Controller {
 		$this->load->model('m_jenis','jenis');
 	}
 
-	public function index()
-	{
-		# code...
-	}
-
 	public function jenis_ajax_list()
 	{
 		$list = $this->jenis->get_datatables();

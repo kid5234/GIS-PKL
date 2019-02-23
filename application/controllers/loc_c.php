@@ -11,11 +11,6 @@ class Loc_c extends CI_Controller {
 		$this->load->model('m_loc','loc');
 	}
 
-	public function index()
-	{
-		# code...
-	}
-
 	public function loc_ajax_list()
 	{
 		$list = $this->loc->get_datatables();
@@ -24,15 +19,14 @@ class Loc_c extends CI_Controller {
 		foreach ($list as $loc) {
 			$no++;
 			$row = array();
-			$row[] = $loc->loc_id;
 			$row[] = $loc->loc_nama;
 			$row[] = $loc->loc_alamat;
-			$row[] = $loc->loc_category_id;
-			$row[] = $loc->loc_prov_id;
-			$row[] = $loc->loc_reg_id;
+			$row[] = $loc->loc_category_name;
+			$row[] = $loc->kotakab;
+			$row[] = $loc->provinsi;
 
 			//add html for action
-			$row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$loc->loc_id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			$row[] = '<a class="btn btn-sm btn-primary" href="editlocation/'.$loc->loc_id.'" title="Edit"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
 			<a class="btn btn-sm btn-danger pull-right" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$loc->loc_id."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
 
 			$data[] = $row;
@@ -76,7 +70,6 @@ class Loc_c extends CI_Controller {
 	{
 		$this->_validate();
 		$data = array(
-			'loc_id' => $this->input->post('placeid'),
 			'loc_nama' => $this->input->post('nama'),
 			'loc_alamat' => $this->input->post('alamat'),
 			'loc_notelp' => $this->input->post('telepon'),

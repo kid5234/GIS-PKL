@@ -11,11 +11,6 @@ class Dosen_c extends CI_Controller {
 		$this->load->model('m_dosen','dosen');
 	}
 
-	public function index()
-	{
-		# code...
-	}
-
 	public function dosen_ajax_list()
 	{
 		$list = $this->dosen->get_datatables();

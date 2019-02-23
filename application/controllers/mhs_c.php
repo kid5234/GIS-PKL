@@ -11,11 +11,6 @@ class Mhs_c extends CI_Controller {
 		$this->load->model('m_mhs','mhs');
 	}
 
-	public function index()
-	{
-		# code...
-	}
-
 	public function mhs_ajax_list()
 	{
 		$list = $this->mhs->get_datatables();

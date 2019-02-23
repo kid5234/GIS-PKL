@@ -4,88 +4,98 @@ $this->load->view('pages/required/head-min', $this->data);
 ?>
 <!-- Load Navigation -->
 <style type="text/css">
- /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
- /* Optional: Makes the sample page fill the window. */
- html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-#map {
-  height: 100%;
-}
-#description {
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 100%;
+  }
+  #description {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+  }
 
-#infowindow-content .title {
-  font-weight: bold;
-}
+  #infowindow-content .title {
+    font-weight: bold;
+  }
 
-#infowindow-content {
-  display: none;
-}
+  #infowindow-content {
+    display: none;
+  }
 
-#map #infowindow-content {
-  display: inline;
-}
+  #map #infowindow-content {
+    display: inline;
+  }
 
-.pac-card {
-  margin: 10px 10px 0 0;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  background-color: #fff;
-  font-family: Roboto;
-}
+  .pac-card {
+    margin: 10px 10px 0 0;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    font-family: Roboto;
+  }
 
-#pac-container {
-  padding-bottom: 12px;
-  margin-right: 12px;
-}
+  #pac-container {
+    padding-bottom: 12px;
+    margin-right: 12px;
+  }
 
-.pac-controls {
-  display: inline-block;
-  padding: 5px 11px;
-}
+  .pac-controls {
+    display: inline-block;
+    padding: 5px 11px;
+  }
 
-.pac-controls label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
+  .pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 300px;
-}
+  #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+  }
 
-#pac-input:focus {
-  border-color: #4d90fe;
-}
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
 
-#title {
-  color: #fff;
-  background-color: #4d90fe;
-  font-size: 25px;
-  font-weight: 500;
-  padding: 6px 12px;
-}
-#target {
-  width: 345px;
-}
+  #title {
+    color: #fff;
+    background-color: #4d90fe;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 6px 12px;
+  }
+  #target {
+    width: 345px;
+  }
 </style>
+
+ <?php
+ if (!empty($method)) {
+  echo "<script type='text/javascript'>". "\n";
+  echo "var save_method = " . json_encode($method) . "\n";
+  if (!empty($result)){
+    echo "var provid = " . json_encode($result->loc_prov_id) . "\n";
+    echo "var kotkab_selected = " . json_encode($result->loc_reg_id) . "\n";
+  }
+  echo "</script>";
+}
+?>
+
 <?php $this->load->view('pages/required/nav-min', $this->data);
 ?>
 
@@ -94,7 +104,7 @@ $this->load->view('pages/required/head-min', $this->data);
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Tambah Data Lokasi
+      <?php echo $cara ?> Data Lokasi
       <small> Praktek Kerja Lapangan</small>
     </h1>
   </section>
@@ -107,8 +117,12 @@ $this->load->view('pages/required/head-min', $this->data);
       <div class="box-header">        
         <div class="alert alert-success alert-dismissible fade in">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h4><i class="icon fa fa-check"></i> Success!</h4> Success alert preview. This alert is dismissable.
+          <i class="icon fa fa-check"></i> <b>Success!</b> Data lokasi berhasil di<?php echo $cara ?>.
         </div>
+        <?php $link = base_url('dashboard/location'); 
+        if ($method != 'add'){
+          echo "<a href='".$link."' class='btn btn-default'><i class='fa fa-arrow-left'></i> <span>  Kembali</span></a>";
+        }?>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -119,21 +133,21 @@ $this->load->view('pages/required/head-min', $this->data);
                 <div class="form-group">
                   <label class="control-label col-md-2">Place ID</label>
                   <div class="col-md-10">
-                    <input id="placeid" name="placeid" placeholder="Place ID .." class="form-control" type="text">
+                    <input id="placeid" name="placeid" <?php if (empty($result)){ echo 'placeholder="Place ID .."';} else { echo 'value="'.$result->loc_id.'"';} ?> class="form-control" type="text">
                     <span class="help-block"></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-2">Nama</label>
                   <div class="col-md-10">
-                    <input id="nama" name="nama" placeholder="Nama .." class="form-control" type="text">
+                    <input id="nama" name="nama"  <?php if (empty($result)){ echo 'placeholder="Nama .."';} else { echo 'value="'.$result->loc_nama.'"';} ?> class="form-control" type="text">
                     <span class="help-block"></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-2">Alamat</label>
                   <div class="col-md-10">
-                    <textarea id="alamat" name="alamat" placeholder="Alamat .." class="form-control"></textarea>
+                    <textarea id="alamat" name="alamat" <?php if (empty($result)){ echo 'placeholder="Alamat .."';}?> class="form-control"><?php if (empty($result)){} else { echo $result->loc_alamat;} ?></textarea>
                     <span class="help-block"></span>
                   </div>
                 </div>
@@ -144,7 +158,7 @@ $this->load->view('pages/required/head-min', $this->data);
                       <div class="input-group-addon">
                         <i class="fa fa-phone"></i>
                       </div>
-                      <input type="text" name="telepon" class="form-control">
+                      <input type="text" <?php if (empty($result)){ echo 'placeholder=""';} else { echo 'value="'.$result->loc_notelp.'"';} ?>name="telepon" class="form-control">
                     </div>
                     <span class="help-block"></span>
                   </div>
@@ -178,8 +192,12 @@ $this->load->view('pages/required/head-min', $this->data);
                     <select name="jenis" class="form-control">
                       <option value="">--Select Jenis--</option>
                       <?php
-                      foreach ($jenis as $key => $value) {
-                        echo "<option value='".$value->loc_category_id."'>".$value->loc_category_name."</option>";
+                      foreach ($jenis as $key => $val) {
+                        if ($val->loc_category_id == $result->loc_category_id){
+                          echo "<option value='".$val->loc_category_id."' selected>".$val->loc_category_name."</option>";
+                        } else {
+                          echo "<option value='".$val->loc_category_id."'>".$val->loc_category_name."</option>";
+                        }
                       }
                       ?>
                     </select>
@@ -189,21 +207,23 @@ $this->load->view('pages/required/head-min', $this->data);
                 <div class="form-group">
                   <label class="control-label col-md-2">Latitude</label>
                   <div class="col-md-10">
-                    <input id="lat" name="lat" placeholder="Latitude .." class="form-control" type="text">
+                    <input id="lat" name="lat" <?php if (empty($result)){ echo 'placeholder="Latitude .."';} else { echo 'value="'.$result->loc_lat.'"';} ?> class="form-control" type="number">
                     <span class="help-block"></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-2">Longitude</label>
                   <div class="col-md-10">
-                    <input id="lng" name="lng" placeholder="Longitude .." class="form-control" type="text">
+                    <input id="lng" name="lng" <?php if (empty($result)){ echo 'placeholder="Longitude .."';} else { echo 'value="'.$result->loc_lang.'"';} ?> class="form-control" type="number">
                     <span class="help-block"></span>
                   </div>
                 </div>
                 <hr>
-                <div class="col-md-12">
-                  <button type="button" id="btnSave" onclick="save()" class="btn btn-primary pull-right">Save</button>
-                  <button type="button" id="btnReset" class="btn btn-danger" >Cancel</button>
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <button type="button" id="btnSave" onclick="save()" class="btn btn-primary pull-right">Save</button>
+                    <button type="button" id="btnReset" class="btn btn-danger" >Cancel</button>
+                  </div>
                 </div>
               </div>
             </form>
@@ -218,126 +238,139 @@ $this->load->view('pages/required/head-min', $this->data);
             </div>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete&language=id&region=ID"
             async defer></script>
-            <script type="text/javascript">
-          // This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
+            <script type="text/javascript"> //init google-maps
+            function initAutocomplete() {
+              var map;
+              var marker = [];
+              var infowindow = new google.maps.InfoWindow();
+              var infowindowContent = document.getElementById('infowindow-content');
+              infowindow.setContent(infowindowContent);
 
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+              if (save_method == "update"){
+                var latval = parseFloat(document.getElementById("lat").value);
+                var lngval = parseFloat(document.getElementById("lng").value);
+                var myLatLng = {lat: latval, lng: lngval};
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: myLatLng,
+                  zoom: 16,
+                  mapTypeId: 'roadmap'
+                });
 
-function initAutocomplete() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -0.4959538, lng:117.1562388},
-    zoom: 13,
-    mapTypeId: 'roadmap'
-  });
+                marker = new google.maps.Marker({
+                  map: map,
+                  position: myLatLng,
+                  draggable: true
+                });
+                marker.setMap(map);
 
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-  var marker = [];
+                google.maps.event.addListener(marker,'drag',function(event) {
+                    document.getElementById('lat').value = event.latLng.lat();
+                    document.getElementById('lng').value = event.latLng.lng();
+                });
 
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
-  });
+                google.maps.event.addListener(marker,'dragend',function(event) 
+                        {
+                    document.getElementById('lat').value =event.latLng.lat();
+                    document.getElementById('lng').value =event.latLng.lng();
+                });
 
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener('places_changed', function() {
-    marker = [];
-    
-    // Clear out the old markers.
-    marker.forEach(function(marker) {
-      marker.setMap(null);      
-      map.removeLayer(marker);
-    });
-    
-    var places = searchBox.getPlaces();
-    if (places.length == 0) {
-      return;
-    }
+              } else {
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: -0.4959538, lng:117.1562388},
+                  zoom: 13,
+                  mapTypeId: 'roadmap'
+                });
+              }
 
-    // For each place, get the icon, name and location.
-    var bounds = new google.maps.LatLngBounds();
-    var infowindow = new google.maps.InfoWindow();
-    var infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
-    places.forEach(function(place) {
+              var input = document.getElementById('pac-input');
+              var searchBox = new google.maps.places.SearchBox(input);
+              map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
-      if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-      var icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
+              map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+              });
 
-      var id = place.place_id;
-      var name = place.name;
-      var lat = place.geometry.location.lat();
-      var lng = place.geometry.location.lng();
-      //var address = place.formatted_address;
-      var address = '';
-      if (place.address_components) {
-        address = [
-        (place.address_components[1] && place.address_components[1].long_name || ''),
-        (place.address_components[0] && place.address_components[0].short_name || ''),
-        (place.address_components[2] && place.address_components[2].long_name || ''),
-        ].join(' ');
-      }
+              searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
 
-      // Create a marker for each place.
-      var marker = new google.maps.Marker({
-        map: map,
-        position: place.geometry.location
-      });
+                if (places.length == 0) {
+                  return;
+                }
 
-      infowindowContent.children['place-icon'].src = place.icon;
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindow.open(map, marker);
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
 
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindowContent.children['place-icon'].src = place.icon;
-        infowindowContent.children['place-name'].textContent = place.name;
-        infowindow.open(map, this);
-        document.getElementById('placeid').value = id;
-        document.getElementById('nama').value = name;
-        document.getElementById('alamat').value = address;
-        document.getElementById('lat').value = lat;
-        document.getElementById('lng').value = lng;
-      });
+                  if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                  }
+                  var icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                  };
 
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-        
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    
-    map.fitBounds(bounds);
-  });
-}
-</script>
-</div>
-</div>
-</div>
-<!-- /.box-body -->
-<div class="box-footer">
+                  if (marker && marker.setMap) {
+                    marker.setMap(null);
+                    marker = [];
+                  }
+                  marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                  });
 
-</div>
-<!-- /.box-footer-->
-</div>
-<!-- /.box -->
+                  var id = place.place_id;
+                  var name = place.name;
+                  var lat = marker.getPosition().lat();
+                  var lng = marker.getPosition().lng();
+                  var address = '';
+                  if (place.address_components) {
+                    address = [
+                    (place.address_components[1] && place.address_components[1].long_name || ''),
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].long_name || ''),
+                    ].join(' ');
+                  }
+
+                  infowindowContent.children['place-icon'].src = place.icon;
+                  infowindowContent.children['place-name'].textContent = place.name;
+                  infowindow.open(map, marker);
+
+                  google.maps.event.addListener(marker, 'click', function() {
+                    infowindowContent.children['place-icon'].src = place.icon;
+                    infowindowContent.children['place-name'].textContent = place.name;
+                    infowindow.open(map, this);
+                    document.getElementById('placeid').value = id;
+                    document.getElementById('nama').value = name;
+                    document.getElementById('alamat').value = address;
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('lng').value = lng;
+                  });
+
+                  if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+
+                  } else {
+                    bounds.extend(place.geometry.location);
+                  }
+                });
+
+                map.fitBounds(bounds);
+              });
+            }
+          </script>            
+        </div>
+      </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+
+    </div>
+    <!-- /.box-footer-->
+  </div>
+  <!-- /.box -->
 
 </section>
 <!-- /.content -->
@@ -362,14 +395,19 @@ function initAutocomplete() {
  <?php
  $this->load->view('pages/required/foot-min', $this->data);?>
 
- <script type="text/javascript">
-
-var save_method; //for save method string
-var table;
+<script type="text/javascript"> //doc-ready-func
 
 $(document).ready(function() {
-  save_method = 'add';
   $('.alert').hide();
+
+  if (typeof provid != 'undefined') {
+    $('select[name="prov"]').val(provid).prop('selected', true);
+    listkotakab();
+  }
+
+  if (save_method == 'update'){
+    $('[name="placeid"]').prop("readonly", true);
+  }
 
   $('#btnReset').on('click', function () {
         $('#form')[0].reset(); // reset form on modals
@@ -377,45 +415,52 @@ $(document).ready(function() {
         $('form').find('.help-block').empty();
       });
 
-    //Init regencies by province
-    $('select[name="prov"]').on('change', function() {
-      var stateID = $(this).val();
-      if(stateID) {
-        $.ajax({
-          url: '<?php echo base_url('/dashboard/getreg/')?>'+stateID,
-          type: "GET",
-          dataType: "json",
-          success:function(data) {
-            $('select[name="kota"]').empty();
-            $('select[name="kota"]').append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-            $.each(data, function(key, value) {
-              $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
-            });
-          }
-        });
-      }else{
-        $('select[name="city"]').empty();
-      }
-    });
-
-    //set input/textarea/select event when change value, remove class error and remove text help block 
-    $("input").change(function(){
-      $(this).parent().parent().removeClass('has-error');
-      $(this).next().empty();
-    });
-    $("textarea").change(function(){
-      $(this).parent().parent().removeClass('has-error');
-      $(this).next().empty();
-    });
-    $("select").change(function(){
-      $(this).parent().parent().removeClass('has-error');
-      $(this).next().empty();
-    });
-
+  $('select[name="prov"]').on('change', function() {
+    listkotakab();
   });
 
-function save()
-{
+  $("input").change(function(){
+    $(this).parent().parent().removeClass('has-error');
+    $(this).next().empty();
+  });
+  $("textarea").change(function(){
+    $(this).parent().parent().removeClass('has-error');
+    $(this).next().empty();
+  });
+  $("select").change(function(){
+    $(this).parent().parent().removeClass('has-error');
+    $(this).next().empty();
+  });
+
+});
+
+function listkotakab() {
+  var stateID = $('select[name="prov"]').val();
+  if(stateID) {
+    $.ajax({
+      url: '<?php echo base_url('/dashboard/getreg/')?>'+stateID,
+      type: "GET",
+      dataType: "json",
+      success:function(data) {
+        $('select[name="kota"]').empty();
+        $('select[name="kota"]').append('<option value="">-- Pilih Kabupaten/Kota --</option>');
+        $.each(data, function(key, value) {
+          if (typeof kotkab_selected != 'undefined'){
+            if (value.id == kotkab_selected){
+              $('select[name="kota"]').append('<option value="'+ value.id +'" selected>'+ value.name +'</option>');
+            }        
+          } else {
+              $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+          }    
+        });
+      }
+    });
+  }else{
+    $('select[name="city"]').empty();
+  }
+}
+
+function save(){
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
     var url;
@@ -426,7 +471,6 @@ function save()
       url = "<?php echo site_url('loc_c/loc_ajax_update')?>";
     }
 
-    // ajax adding data to database
     $.ajax({
       url : url,
       type: "POST",
@@ -434,11 +478,13 @@ function save()
       dataType: "JSON",
       success: function(data)
       {
-
             if(data.status) //if success close modal and reload ajax table
             {
               $('.alert').show();
               $('#form')[0].reset(); // reset form on modals
+              if (save_method == 'update'){
+                window.location.href = "<?php echo base_url('dashboard/location')?>";
+              }
             }
             else
             {
@@ -450,15 +496,12 @@ function save()
                 }
             $('#btnSave').text('save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
-
-
           },
           error: function (jqXHR, textStatus, errorThrown)
           {
             alert('Error adding / update data');
             $('#btnSave').text('save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
-
           }
         });
   }
