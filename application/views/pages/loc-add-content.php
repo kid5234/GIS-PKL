@@ -88,7 +88,7 @@ $this->load->view('pages/required/head-min', $this->data);
  if (!empty($method)) {
   echo "<script type='text/javascript'>". "\n";
   echo "var save_method = " . json_encode($method) . "\n";
-  if (!empty($result)){
+  if (isset($result) && !empty($result)){
     echo "var provid = " . json_encode($result->loc_prov_id) . "\n";
     echo "var kotkab_selected = " . json_encode($result->loc_reg_id) . "\n";
   }
@@ -119,10 +119,7 @@ $this->load->view('pages/required/head-min', $this->data);
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <i class="icon fa fa-check"></i> <b>Success!</b> Data lokasi berhasil di<?php echo $cara ?>.
         </div>
-        <?php $link = base_url('dashboard/location'); 
-        if ($method != 'add'){
-          echo "<a href='".$link."' class='btn btn-default'><i class='fa fa-arrow-left'></i> <span>  Kembali</span></a>";
-        }?>
+          <a href="<?php echo base_url('dashboard/location')?>" class='btn btn-default'><i class='fa fa-arrow-left'></i> <span>  Kembali</span></a>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -166,7 +163,7 @@ $this->load->view('pages/required/head-min', $this->data);
                 <div class="form-group">
                   <label class="control-label col-md-2">Provinsi</label>
                   <div class="col-md-10">
-                    <select name="prov" class="form-control">
+                    <select name="prov" class="form-control" style="width: 100%;">
                       <option value="" >--Pilih Provinsi--</option>
                       <?php
                       foreach ($province as $key => $value) {
@@ -180,7 +177,7 @@ $this->load->view('pages/required/head-min', $this->data);
                 <div class="form-group">
                   <label class="control-label col-md-2">Kota</label>
                   <div class="col-md-10">
-                    <select name="kota" class="form-control">
+                    <select name="kota" class="form-control" style="width: 100%;">
                       <option value="">--Select Province First--</option>
                     </select>
                     <span class="help-block"></span>
@@ -189,11 +186,11 @@ $this->load->view('pages/required/head-min', $this->data);
                 <div class="form-group">
                   <label class="control-label col-md-2">Jenis</label>
                   <div class="col-md-10">
-                    <select name="jenis" class="form-control">
+                    <select name="jenis" class="form-control" style="width: 100%;">
                       <option value="">--Select Jenis--</option>
                       <?php
                       foreach ($jenis as $key => $val) {
-                        if ($val->loc_category_id == $result->loc_category_id){
+                        if (!empty($result) && $val->loc_category_id == $result->loc_category_id){
                           echo "<option value='".$val->loc_category_id."' selected>".$val->loc_category_name."</option>";
                         } else {
                           echo "<option value='".$val->loc_category_id."'>".$val->loc_category_name."</option>";
@@ -239,127 +236,127 @@ $this->load->view('pages/required/head-min', $this->data);
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete&language=id&region=ID"
             async defer></script>
             <script type="text/javascript"> //init google-maps
-            function initAutocomplete() {
-              var map;
-              var marker = [];
-              var infowindow = new google.maps.InfoWindow();
-              var infowindowContent = document.getElementById('infowindow-content');
-              infowindow.setContent(infowindowContent);
+              function initAutocomplete() {
+                var map;
+                var marker = [];
+                var infowindow = new google.maps.InfoWindow();
+                var infowindowContent = document.getElementById('infowindow-content');
+                infowindow.setContent(infowindowContent);
 
-              if (save_method == "update"){
-                var latval = parseFloat(document.getElementById("lat").value);
-                var lngval = parseFloat(document.getElementById("lng").value);
-                var myLatLng = {lat: latval, lng: lngval};
-                map = new google.maps.Map(document.getElementById('map'), {
-                  center: myLatLng,
-                  zoom: 16,
-                  mapTypeId: 'roadmap'
-                });
+                if (save_method == "update"){
+                  var latval = parseFloat(document.getElementById("lat").value);
+                  var lngval = parseFloat(document.getElementById("lng").value);
+                  var myLatLng = {lat: latval, lng: lngval};
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center: myLatLng,
+                    zoom: 16,
+                    mapTypeId: 'roadmap'
+                  });
 
-                marker = new google.maps.Marker({
-                  map: map,
-                  position: myLatLng,
-                  draggable: true
-                });
-                marker.setMap(map);
-
-                google.maps.event.addListener(marker,'drag',function(event) {
-                    document.getElementById('lat').value = event.latLng.lat();
-                    document.getElementById('lng').value = event.latLng.lng();
-                });
-
-                google.maps.event.addListener(marker,'dragend',function(event) 
-                        {
-                    document.getElementById('lat').value =event.latLng.lat();
-                    document.getElementById('lng').value =event.latLng.lng();
-                });
-
-              } else {
-                map = new google.maps.Map(document.getElementById('map'), {
-                  center: {lat: -0.4959538, lng:117.1562388},
-                  zoom: 13,
-                  mapTypeId: 'roadmap'
-                });
-              }
-
-              var input = document.getElementById('pac-input');
-              var searchBox = new google.maps.places.SearchBox(input);
-              map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-
-              map.addListener('bounds_changed', function() {
-                searchBox.setBounds(map.getBounds());
-              });
-
-              searchBox.addListener('places_changed', function() {
-                var places = searchBox.getPlaces();
-
-                if (places.length == 0) {
-                  return;
-                }
-
-                var bounds = new google.maps.LatLngBounds();
-                places.forEach(function(place) {
-
-                  if (!place.geometry) {
-                    console.log("Returned place contains no geometry");
-                    return;
-                  }
-                  var icon = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25)
-                  };
-
-                  if (marker && marker.setMap) {
-                    marker.setMap(null);
-                    marker = [];
-                  }
                   marker = new google.maps.Marker({
                     map: map,
-                    position: place.geometry.location
+                    position: myLatLng,
+                    draggable: true
+                  });
+                  marker.setMap(map);
+
+                  google.maps.event.addListener(marker,'drag',function(event) {
+                      document.getElementById('lat').value = event.latLng.lat();
+                      document.getElementById('lng').value = event.latLng.lng();
                   });
 
-                  var id = place.place_id;
-                  var name = place.name;
-                  var lat = marker.getPosition().lat();
-                  var lng = marker.getPosition().lng();
-                  var address = '';
-                  if (place.address_components) {
-                    address = [
-                    (place.address_components[1] && place.address_components[1].long_name || ''),
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].long_name || ''),
-                    ].join(' ');
-                  }
-
-                  infowindowContent.children['place-icon'].src = place.icon;
-                  infowindowContent.children['place-name'].textContent = place.name;
-                  infowindow.open(map, marker);
-
-                  google.maps.event.addListener(marker, 'click', function() {
-                    infowindowContent.children['place-icon'].src = place.icon;
-                    infowindowContent.children['place-name'].textContent = place.name;
-                    infowindow.open(map, this);
-                    document.getElementById('placeid').value = id;
-                    document.getElementById('nama').value = name;
-                    document.getElementById('alamat').value = address;
-                    document.getElementById('lat').value = lat;
-                    document.getElementById('lng').value = lng;
+                  google.maps.event.addListener(marker,'dragend',function(event) 
+                          {
+                      document.getElementById('lat').value =event.latLng.lat();
+                      document.getElementById('lng').value =event.latLng.lng();
                   });
 
-                  if (place.geometry.viewport) {
-                    bounds.union(place.geometry.viewport);
+                } else {
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -0.4959538, lng:117.1562388},
+                    zoom: 13,
+                    mapTypeId: 'roadmap'
+                  });
+                }
 
-                  } else {
-                    bounds.extend(place.geometry.location);
-                  }
+                var input = document.getElementById('pac-input');
+                var searchBox = new google.maps.places.SearchBox(input);
+                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+
+                map.addListener('bounds_changed', function() {
+                  searchBox.setBounds(map.getBounds());
                 });
 
-                map.fitBounds(bounds);
-              });
-            }
+                searchBox.addListener('places_changed', function() {
+                  var places = searchBox.getPlaces();
+
+                  if (places.length == 0) {
+                    return;
+                  }
+
+                  var bounds = new google.maps.LatLngBounds();
+                  places.forEach(function(place) {
+
+                    if (!place.geometry) {
+                      console.log("Returned place contains no geometry");
+                      return;
+                    }
+                    var icon = {
+                      url: place.icon,
+                      size: new google.maps.Size(71, 71),
+                      origin: new google.maps.Point(0, 0),
+                      anchor: new google.maps.Point(17, 34),
+                      scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    if (marker && marker.setMap) {
+                      marker.setMap(null);
+                      marker = [];
+                    }
+                    marker = new google.maps.Marker({
+                      map: map,
+                      position: place.geometry.location
+                    });
+
+                    var id = place.place_id;
+                    var name = place.name;
+                    var lat = marker.getPosition().lat();
+                    var lng = marker.getPosition().lng();
+                    var address = '';
+                    if (place.address_components) {
+                      address = [
+                      (place.address_components[1] && place.address_components[1].long_name || ''),
+                      (place.address_components[0] && place.address_components[0].short_name || ''),
+                      (place.address_components[2] && place.address_components[2].long_name || ''),
+                      ].join(' ');
+                    }
+
+                    infowindowContent.children['place-icon'].src = place.icon;
+                    infowindowContent.children['place-name'].textContent = place.name;
+                    infowindow.open(map, marker);
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                      infowindowContent.children['place-icon'].src = place.icon;
+                      infowindowContent.children['place-name'].textContent = place.name;
+                      infowindow.open(map, this);
+                      document.getElementById('placeid').value = id;
+                      document.getElementById('nama').value = name;
+                      document.getElementById('alamat').value = address;
+                      document.getElementById('lat').value = lat;
+                      document.getElementById('lng').value = lng;
+                    });
+
+                    if (place.geometry.viewport) {
+                      bounds.union(place.geometry.viewport);
+
+                    } else {
+                      bounds.extend(place.geometry.location);
+                    }
+                  });
+
+                  map.fitBounds(bounds);
+                });
+              }
           </script>            
         </div>
       </div>
@@ -398,7 +395,8 @@ $this->load->view('pages/required/head-min', $this->data);
 <script type="text/javascript"> //doc-ready-func
 
 $(document).ready(function() {
-  $('.alert').hide();
+  $('.alert').hide()
+  //$('.select2').select2()
 
   if (typeof provid != 'undefined') {
     $('select[name="prov"]').val(provid).prop('selected', true);
@@ -425,11 +423,7 @@ $(document).ready(function() {
   });
   $("textarea").change(function(){
     $(this).parent().parent().removeClass('has-error');
-    $(this).next().empty();
-  });
-  $("select").change(function(){
-    $(this).parent().parent().removeClass('has-error');
-    $(this).next().empty();
+    //$(this).next().empty();
   });
 
 });
@@ -448,7 +442,9 @@ function listkotakab() {
           if (typeof kotkab_selected != 'undefined'){
             if (value.id == kotkab_selected){
               $('select[name="kota"]').append('<option value="'+ value.id +'" selected>'+ value.name +'</option>');
-            }        
+            } else {
+              $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+            }       
           } else {
               $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
           }    

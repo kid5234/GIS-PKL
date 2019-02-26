@@ -11,6 +11,9 @@ class Dashboard extends CI_Controller
 		if($this->session->has_userdata('admin_login')==FALSE) 
 			redirect(site_url());
 		$this->load->model('m_jenis','jenis');
+		$this->load->model('m_loc','loc');
+		$this->load->model('m_mhs','mhs');
+		$this->load->model('m_dosen','dosen');
 		$this->page = $this->input->get('page');
 	}
 
@@ -29,7 +32,7 @@ class Dashboard extends CI_Controller
 			'title' => "PKL GIS: Location"
 		);	
 
-		$this->load->view('pages/loc_content', $this->data);
+		$this->load->view('pages/loc-content', $this->data);
 
 	}	
 
@@ -44,7 +47,7 @@ class Dashboard extends CI_Controller
 		$this->data['method'] = 'add';
 		$this->data['cara'] = 'Tambah';
 
-		$this->load->view('pages/loc_add_content', $this->data);
+		$this->load->view('pages/loc-add-content', $this->data);
 	}
 
 
@@ -62,7 +65,7 @@ class Dashboard extends CI_Controller
 
 		$this->data['result'] = $this->loc->get_by_id($id);
 
-		$this->load->view('pages/loc_add_content', $this->data);
+		$this->load->view('pages/loc-add-content', $this->data);
 	}
 
 	public function mahasiswa()
@@ -98,19 +101,20 @@ class Dashboard extends CI_Controller
 	public function pkl()
 	{
 		$this->data = array(
-			'title' => "pages/PKL GIS: PKL"
-		);	
+			'title' => "PKL GIS: PKL"
+		);
+		$this->data['lokasi'] = $this->loc->getall();	
+		$this->data['mhs'] = $this->mhs->getall();	
+		$this->data['dosen'] = $this->dosen->getall();	
 
-		$this->load->view('pages/main-index', $this->data);
+		$this->load->view('pages/pkl-content', $this->data);
 	}
 
-	public function addpkl()
-	{
-		$this->data = array(
-			'title' => "pages/PKL GIS: PKL"
-		);	
+	public function debug() {
+		$this->load->model('m_pkl');
 
-		$this->load->view('pages/pkl_add_content', $this->data);
+		$data['q'] = $this->db->_update(); 
+		$this->load->view('error', $data);
 	}
 
 	public function getreg($id){

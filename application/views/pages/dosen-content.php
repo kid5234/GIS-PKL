@@ -53,7 +53,7 @@ $this->load->view('pages/required/head-min', $this->data);
           <th>Alamat</th>
           <th>No. Telp</th>
           <th style="width:150px;">Jabatan</th>
-          <th style="width:130px;">Action</th>
+          <th style="width:135px;">Action</th>
         </tr>
       </thead>
       <tbody>

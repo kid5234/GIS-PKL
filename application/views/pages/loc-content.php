@@ -38,7 +38,7 @@ $this->load->view('pages/required/head-min', $this->data);
           <th>Jenis Lokasi</th>
           <th>Kota</th>
           <th>Provinsi</th>
-          <th style="width:125px;">Action</th>
+          <th style="width:135px;">Action</th>
         </tr>
       </thead>
       <tbody>

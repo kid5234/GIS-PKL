@@ -1,9 +1,12 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class M_jenis extends CI_Model {
+
 	var $table = 'loc_category';
 	var $column_order = array('loc_category_id','loc_category_name'); //set column field database for datatable orderable
 	var $column_search = array('loc_category_id','loc_category_name'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('loc_category_id' => 'desc'); // default order 
+	var $order = array('loc_category_id' => 'asc'); // default order 
 
 	public function __construct()
 	{
@@ -16,7 +19,7 @@ class M_jenis extends CI_Model {
 		$this->db->from($this->table);
 
 		$i = 0;
-	
+		
 		foreach ($this->column_search as $item) // loop column 
 		{
 			if($_POST['search']['value']) // if datatable send POST for search
@@ -34,10 +37,10 @@ class M_jenis extends CI_Model {
 
 				if(count($this->column_search) - 1 == $i) //last loop
 					$this->db->group_end(); //close bracket
+				}
+				$i++;
 			}
-			$i++;
-		}
-		
+			
 		if(isset($_POST['order'])) // here order processing
 		{
 			$this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
@@ -53,7 +56,7 @@ class M_jenis extends CI_Model {
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
-		$this->db->limit($_POST['length'], $_POST['start']);
+			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -99,8 +102,10 @@ class M_jenis extends CI_Model {
 	}
 
 	public function getall(){
-		$q = $this->db->get('loc_category');      
-		return $q->result();
+		$this->db->from($this->table);
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	public function getProvinces()

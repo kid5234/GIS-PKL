@@ -74,6 +74,13 @@ class M_mhs extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
+	public function getall(){
+		$this->db->from($this->table);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	public function get_by_id($id)
 	{
 		$this->db->from($this->table);

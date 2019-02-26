@@ -21,7 +21,7 @@
   <?php echo $map['js'] ?>
 </head>
 <body>
-  <link rel="stylesheet" href="style.less" class="cid-rgwhiAv3k0" id="menu1-0" data-rv-view="70">
+  <!-- <link rel="stylesheet" href="style.less" class="cid-rgwhiAv3k0" id="menu1-0" data-rv-view="70"> -->
   <section class="menu cid-rgwhiAv3k0" once="menu" id="menu1-0">
     <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-toggleable-sm">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

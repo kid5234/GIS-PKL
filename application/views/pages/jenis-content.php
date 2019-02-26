@@ -50,7 +50,7 @@ $this->load->view('pages/required/head-min', $this->data);
         <tr>
           <th>ID</th>
           <th>Nama</th>
-          <th style="width:125px;">Action</th>
+          <th style="width:135px;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -101,8 +101,6 @@ var save_method; //for save method string
 var table;
 
 $(document).ready(function() {
-
-    $('[data-mask]').inputmask()
 
     //datatables
     table = $('#table').DataTable({ 

@@ -19,7 +19,7 @@ class M_dosen extends CI_Model {
 		$this->db->from($this->table);
 
 		$i = 0;
-	
+		
 		foreach ($this->column_search as $item) // loop column 
 		{
 			if($_POST['search']['value']) // if datatable send POST for search
@@ -37,10 +37,10 @@ class M_dosen extends CI_Model {
 
 				if(count($this->column_search) - 1 == $i) //last loop
 					$this->db->group_end(); //close bracket
+				}
+				$i++;
 			}
-			$i++;
-		}
-		
+			
 		if(isset($_POST['order'])) // here order processing
 		{
 			$this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
@@ -56,7 +56,7 @@ class M_dosen extends CI_Model {
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
-		$this->db->limit($_POST['length'], $_POST['start']);
+			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -72,6 +72,13 @@ class M_dosen extends CI_Model {
 	{
 		$this->db->from($this->table);
 		return $this->db->count_all_results();
+	}
+
+	public function getall(){
+		$this->db->from($this->table);
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	public function get_by_id($id)

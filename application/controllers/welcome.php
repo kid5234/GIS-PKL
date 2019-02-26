@@ -15,21 +15,21 @@ class Welcome extends CI_Controller {
 		$config['center'] = '-0.4959538,117.1562388';
 		$config['zoom'] = 'auto';
 		$config['styles'] = array(
-			array(
-				"name"=>"No Businesses", 
-				"definition"=> array(
-					array(
-						"featureType"=>"poi", 
-						"elementType" => 
-						"business", 
-						"stylers"=> array(
-							array(
-								"visibility"=>"off"
-							)
-						)
-					)
-				)
-			)
+		  	array(
+		  		"name"=>"No Businesses", 
+		  		"definition"=> array(
+		   			array(
+		   				"featureType"=>"poi", 
+		   				"elementType" => 
+		   				"business", 
+		   				"stylers"=> array(
+		   					array(
+		   						"visibility"=>"off"
+		   					)
+		   				)
+		   			)
+		  		)
+		  	)
 		);
 		$this->googlemaps->initialize($config);
 		$this->data['map'] = $this->googlemaps->create_map();
