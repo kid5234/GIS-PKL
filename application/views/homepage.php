@@ -92,21 +92,21 @@
             <!--Left-->
             <div class="col-12 col-md-3">
               <div class="left-block wrapper">
-                <form action="" class="form-group" method="POST" role="form">
+                <form action="" class="form-group" method="GET" role="form">
                   <h5 class="align-left mbr-fonts-style m-0 display-6">
                     Search Location By:
                   </h5>
                   <br>
                   <select id="showby" name="showby" class="form-control">
                     <option value="">-- Select --</option>
-                    <option value="rank">Ranking</option>
                     <option value="jenis">Jenis Instansi</option>
                   </select>
                   <hr>
                   <select id="listtype" name="listtype" class="form-control" style="display: none">
-                    <option value="noll">-- Select --</option>
+                    <option value="">-- Select --</option>
                   </select>
-                  <button type="submit" class="btn btn-primary">Search</button>
+                  <br />
+                  <button type="submit" class="btn-small btn-primary">Search</button>
                 </form>
               </div>
             </div>
@@ -262,10 +262,6 @@
     });
   </script>
   <script>
-    function detail_hotel(param) 
-    {
-      $('div#modal-id').modal('show');
-    }
     $(document).ready(function() {
       <?php if($this->session->flashdata('message')) : ?>
         $('div#modal-alert').modal('show');
