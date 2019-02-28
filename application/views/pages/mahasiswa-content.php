@@ -275,7 +275,7 @@ function add_person()
           <h3 class="modal-title">Mahasiswa Form</h3>
         </div>
         <div class="modal-body form">
-          <form action="" id="form" class="form-horizontal">
+          <form action="" id="form" method="POST" class="form-horizontal">
             <input type="hidden" value="" name="id"/> 
             <div class="form-body">
               <div class="form-group">

@@ -4,88 +4,88 @@ $this->load->view('pages/required/head-min', $this->data);
 ?>
 <!-- Load Navigation -->
 <style type="text/css">
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  #map {
-    height: 100%;
-  }
-  #description {
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#map {
+  height: 100%;
+}
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
 
-  #infowindow-content .title {
-    font-weight: bold;
-  }
+#infowindow-content .title {
+  font-weight: bold;
+}
 
-  #infowindow-content {
-    display: none;
-  }
+#infowindow-content {
+  display: none;
+}
 
-  #map #infowindow-content {
-    display: inline;
-  }
+#map #infowindow-content {
+  display: inline;
+}
 
-  .pac-card {
-    margin: 10px 10px 0 0;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
-    font-family: Roboto;
-  }
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
 
-  #pac-container {
-    padding-bottom: 12px;
-    margin-right: 12px;
-  }
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
 
-  .pac-controls {
-    display: inline-block;
-    padding: 5px 11px;
-  }
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
 
-  .pac-controls label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-  }
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
 
-  #pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 300px;
-  }
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 500px;
+}
 
-  #pac-input:focus {
-    border-color: #4d90fe;
-  }
+#pac-input:focus {
+  border-color: #4d90fe;
+}
 
-  #title {
-    color: #fff;
-    background-color: #4d90fe;
-    font-size: 25px;
-    font-weight: 500;
-    padding: 6px 12px;
-  }
-  #target {
-    width: 345px;
-  }
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+#target {
+  width: 345px;
+}
 </style>
 
- <?php
- if (!empty($method)) {
+<?php
+if (!empty($method)) {
   echo "<script type='text/javascript'>". "\n";
   echo "var save_method = " . json_encode($method) . "\n";
   if (isset($result) && !empty($result)){
@@ -115,11 +115,11 @@ $this->load->view('pages/required/head-min', $this->data);
     <!-- Default box -->
     <div class="box box-default">
       <div class="box-header">        
-        <div class="alert alert-success alert-dismissible fade in">
+        <div class="alert alert-success alert-dismissible fade in" style="display:none;">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <i class="icon fa fa-check"></i> <b>Success!</b> Data lokasi berhasil di<?php echo $cara ?>.
         </div>
-          <a href="<?php echo base_url('dashboard/location')?>" class='btn btn-default'><i class='fa fa-arrow-left'></i> <span>  Kembali</span></a>
+        <a href="<?php echo base_url('dashboard/location')?>" class='btn btn-default'><i class='fa fa-arrow-left'></i> <span>  Kembali</span></a>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -236,127 +236,127 @@ $this->load->view('pages/required/head-min', $this->data);
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete&language=id&region=ID"
             async defer></script>
             <script type="text/javascript"> //init google-maps
-              function initAutocomplete() {
-                var map;
-                var marker = [];
-                var infowindow = new google.maps.InfoWindow();
-                var infowindowContent = document.getElementById('infowindow-content');
-                infowindow.setContent(infowindowContent);
+            function initAutocomplete() {
+              var map;
+              var marker = [];
+              var infowindow = new google.maps.InfoWindow();
+              var infowindowContent = document.getElementById('infowindow-content');
+              infowindow.setContent(infowindowContent);
 
-                if (save_method == "update"){
-                  var latval = parseFloat(document.getElementById("lat").value);
-                  var lngval = parseFloat(document.getElementById("lng").value);
-                  var myLatLng = {lat: latval, lng: lngval};
-                  map = new google.maps.Map(document.getElementById('map'), {
-                    center: myLatLng,
-                    zoom: 16,
-                    mapTypeId: 'roadmap'
-                  });
-
-                  marker = new google.maps.Marker({
-                    map: map,
-                    position: myLatLng,
-                    draggable: true
-                  });
-                  marker.setMap(map);
-
-                  google.maps.event.addListener(marker,'drag',function(event) {
-                      document.getElementById('lat').value = event.latLng.lat();
-                      document.getElementById('lng').value = event.latLng.lng();
-                  });
-
-                  google.maps.event.addListener(marker,'dragend',function(event) 
-                          {
-                      document.getElementById('lat').value =event.latLng.lat();
-                      document.getElementById('lng').value =event.latLng.lng();
-                  });
-
-                } else {
-                  map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: -0.4959538, lng:117.1562388},
-                    zoom: 13,
-                    mapTypeId: 'roadmap'
-                  });
-                }
-
-                var input = document.getElementById('pac-input');
-                var searchBox = new google.maps.places.SearchBox(input);
-                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-
-                map.addListener('bounds_changed', function() {
-                  searchBox.setBounds(map.getBounds());
+              if (save_method == "update"){
+                var latval = parseFloat(document.getElementById("lat").value);
+                var lngval = parseFloat(document.getElementById("lng").value);
+                var myLatLng = {lat: latval, lng: lngval};
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: myLatLng,
+                  zoom: 16,
+                  mapTypeId: 'roadmap'
                 });
 
-                searchBox.addListener('places_changed', function() {
-                  var places = searchBox.getPlaces();
+                marker = new google.maps.Marker({
+                  map: map,
+                  position: myLatLng,
+                  draggable: true
+                });
+                marker.setMap(map);
 
-                  if (places.length == 0) {
-                    return;
-                  }
+                google.maps.event.addListener(marker,'drag',function(event) {
+                  document.getElementById('lat').value = event.latLng.lat();
+                  document.getElementById('lng').value = event.latLng.lng();
+                });
 
-                  var bounds = new google.maps.LatLngBounds();
-                  places.forEach(function(place) {
+                google.maps.event.addListener(marker,'dragend',function(event) 
+                {
+                  document.getElementById('lat').value =event.latLng.lat();
+                  document.getElementById('lng').value =event.latLng.lng();
+                });
 
-                    if (!place.geometry) {
-                      console.log("Returned place contains no geometry");
-                      return;
-                    }
-                    var icon = {
-                      url: place.icon,
-                      size: new google.maps.Size(71, 71),
-                      origin: new google.maps.Point(0, 0),
-                      anchor: new google.maps.Point(17, 34),
-                      scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    if (marker && marker.setMap) {
-                      marker.setMap(null);
-                      marker = [];
-                    }
-                    marker = new google.maps.Marker({
-                      map: map,
-                      position: place.geometry.location
-                    });
-
-                    var id = place.place_id;
-                    var name = place.name;
-                    var lat = marker.getPosition().lat();
-                    var lng = marker.getPosition().lng();
-                    var address = '';
-                    if (place.address_components) {
-                      address = [
-                      (place.address_components[1] && place.address_components[1].long_name || ''),
-                      (place.address_components[0] && place.address_components[0].short_name || ''),
-                      (place.address_components[2] && place.address_components[2].long_name || ''),
-                      ].join(' ');
-                    }
-
-                    infowindowContent.children['place-icon'].src = place.icon;
-                    infowindowContent.children['place-name'].textContent = place.name;
-                    infowindow.open(map, marker);
-
-                    google.maps.event.addListener(marker, 'click', function() {
-                      infowindowContent.children['place-icon'].src = place.icon;
-                      infowindowContent.children['place-name'].textContent = place.name;
-                      infowindow.open(map, this);
-                      document.getElementById('placeid').value = id;
-                      document.getElementById('nama').value = name;
-                      document.getElementById('alamat').value = address;
-                      document.getElementById('lat').value = lat;
-                      document.getElementById('lng').value = lng;
-                    });
-
-                    if (place.geometry.viewport) {
-                      bounds.union(place.geometry.viewport);
-
-                    } else {
-                      bounds.extend(place.geometry.location);
-                    }
-                  });
-
-                  map.fitBounds(bounds);
+              } else {
+                map = new google.maps.Map(document.getElementById('map'), {
+                  center: {lat: -0.4959538, lng:117.1562388},
+                  zoom: 13,
+                  mapTypeId: 'roadmap'
                 });
               }
+
+              var input = document.getElementById('pac-input');
+              var searchBox = new google.maps.places.SearchBox(input);
+              map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+
+              map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+              });
+
+              searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                  return;
+                }
+
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+
+                  if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                  }
+                  var icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                  };
+
+                  if (marker && marker.setMap) {
+                    marker.setMap(null);
+                    marker = [];
+                  }
+                  marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                  });
+
+                  var id = place.place_id;
+                  var name = place.name;
+                  var lat = marker.getPosition().lat();
+                  var lng = marker.getPosition().lng();
+                  var address = '';
+                  if (place.address_components) {
+                    address = [
+                    (place.address_components[1] && place.address_components[1].long_name || ''),
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].long_name || ''),
+                    ].join(' ');
+                  }
+
+                  infowindowContent.children['place-icon'].src = place.icon;
+                  infowindowContent.children['place-name'].textContent = place.name;
+                  infowindow.open(map, marker);
+
+                  google.maps.event.addListener(marker, 'click', function() {
+                    infowindowContent.children['place-icon'].src = place.icon;
+                    infowindowContent.children['place-name'].textContent = place.name;
+                    infowindow.open(map, this);
+                    document.getElementById('placeid').value = id;
+                    document.getElementById('nama').value = name;
+                    document.getElementById('alamat').value = address;
+                    document.getElementById('lat').value = lat;
+                    document.getElementById('lng').value = lng;
+                  });
+
+                  if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+
+                  } else {
+                    bounds.extend(place.geometry.location);
+                  }
+                });
+
+                map.fitBounds(bounds);
+              });
+            }
           </script>            
         </div>
       </div>
@@ -395,7 +395,7 @@ $this->load->view('pages/required/head-min', $this->data);
 <script type="text/javascript"> //doc-ready-func
 
 $(document).ready(function() {
-  $('.alert').hide()
+  //$('.alert').hide()
   //$('.select2').select2()
 
   if (typeof provid != 'undefined') {
@@ -446,7 +446,7 @@ function listkotakab() {
               $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
             }       
           } else {
-              $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+            $('select[name="kota"]').append('<option value="'+ value.id +'">'+ value.name +'</option>');
           }    
         });
       }
@@ -476,8 +476,12 @@ function save(){
       {
             if(data.status) //if success close modal and reload ajax table
             {
-              $('.alert').show();
-              $('#form')[0].reset(); // reset form on modals
+              $('.alert').fadeIn('slow', function(){
+               $('.alert').delay(3000).fadeOut(); 
+              });
+              //$('.alert').show();
+              $('#form')[0].reset(); 
+              $('input[name="pac-input"').val('');// reset form on modals
               if (save_method == 'update'){
                 window.location.href = "<?php echo base_url('dashboard/location')?>";
               }
