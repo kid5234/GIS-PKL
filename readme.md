@@ -3,12 +3,18 @@
 SIG PKL adalah GIS berbasis web yang dibangun dengan PHP Framework CodeIgniter dan Google Maps API V3, untuk memenuhi tugas akhir Skripsi.
 
 ## Features
-- input data lokasi melalui pencarian pada google maps
-- Mudah untuk dipelajari dan diperbarui
-- Tampilan yang responsive dan adaptive, sudah di tes dengan beberapa device dan ukuran layar.
-- Dynamic title, description and footer note
-- fully customizeable from admin dashboard
-- Tema untuk dashboard admin
-- filter data per kategori atau field
+- Easy to learn.
+- Fully customizeable.
+- Responsive and adaptive theme.
+- Dynamic title, description and footer note.
+- Add location to local database based on google maps search result.
 
+## Requirements
+- Web server with PHP version 5.6 or newer is recommended.
+- MariaDB database (or you can use MySQL, see this [documentation](https://mariadb.com/kb/en/library/mariadb-vs-mysql-compatibility/))
+- Any web browser
+
+## Future Updates
+- Migration
+- User configuration
 

@@ -69,7 +69,7 @@ ul.options li {
           <th>Lokasi</th>
           <th>Tgl Mulai</th>
           <th>Tgl Selesai</th>
-          <th style="width:135px;">Action</th>
+          <th style="width:80px;">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -127,12 +127,12 @@ $(document).ready(function() {
 
   $('#datepicker').datepicker({
     autoclose: true,
-    format: 'yyyy/mm/dd'
+    format: 'yyyy/m/d'
   })
   
   $('#datepicker2').datepicker({
     autoclose: true,
-    format: 'yyyy/mm/dd'
+    format: 'yyyy/m/d'
   })
 
     //datatables
@@ -185,7 +185,6 @@ $(document).ready(function() {
 function add_person() {
   save_method = 'add';
     $('#form')[0].reset(); // reset form on modals
-    $('#opt').empty();
     $('.select2').val('').trigger('change');
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
@@ -263,6 +262,7 @@ function add_person() {
             if(data.status) //if success close modal and reload ajax table
             {
               $('#modal_form').modal('hide');
+              $('#opt').empty();
               reload_table();
             }
             else
@@ -290,7 +290,7 @@ function add_person() {
 
   function delete_person(id)
   {
-    if(confirm('Are you sure delete this data?'))
+    if(confirm('Are you sure delete this group data?'))
     {
         // ajax delete data to database
         $.ajax({

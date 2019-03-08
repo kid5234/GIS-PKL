@@ -233,7 +233,7 @@ if (!empty($method)) {
               <img src="" width="16" height="16" id="place-icon">
               <span id="place-name"  class="title"></span><br>
             </div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJGxbuldQVV1qodn-Ge3uSqoe7rWRg8vk&libraries=places&callback=initAutocomplete&language=id&region=ID"
+            <script src="https://maps.googleapis.com/maps/api/js?key=INSERT_API_KEY_HERE&libraries=places&callback=initAutocomplete&language=id&region=ID"
             async defer></script>
             <script type="text/javascript"> //init google-maps
             function initAutocomplete() {

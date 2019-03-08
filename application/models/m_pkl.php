@@ -15,7 +15,6 @@ class M_pkl extends CI_Model {
 
 	private function _get_datatables_query()
 	{
-		
 		$this->db->from($this->table);
 
 		$i = 0;
@@ -57,7 +56,8 @@ class M_pkl extends CI_Model {
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
-		$this->db->select('idkelompok, GROUP_CONCAT(mhs_data.mhs_nama) as mhsnama, dosen_data.dosen_nama, loc_data.loc_nama, pkl_tglawal, pkl_tglakhir');    
+		$this->db->select('idkelompok, GROUP_CONCAT(mhs_data.mhs_nama) as mhsnama, dosen_data.dosen_nama, loc_data.loc_nama, pkl_tglawal, pkl_tglakhir'); 
+		//$this->db->from($this->table);   
 		$this->db->join('mhs_data', 'pkl_data.mhs_nim = mhs_data.nim' ,'left');
 		$this->db->join('dosen_data', 'pkl_data.dosen_nip = dosen_data.nip', 'left');
 		$this->db->join('loc_data', 'pkl_data.loc_id = loc_data.loc_id', 'left');
@@ -137,21 +137,18 @@ class M_pkl extends CI_Model {
 		$q = $this->db->query("select MAX(RIGHT(idkelompok,4)) as idpkl, DATE_FORMAT(pkl_tglawal, '%y') as tglawal from pkl_data");
 		$tgl = date('y', strtotime($string));
 		$kd = "0001";
+		
 		foreach($q->result() as $k)
 		{	
 			$tglawal = $k->tglawal;				
 			if ($tgl==$tglawal){
 				$id=$k->idpkl;
-					if ($kd==$id){
+					if ($kd!=$id){
 						$tmp = ((int)$id+1);
 						$kd = sprintf("%04s", $tmp);
 				}
 			}				
-		}
-		
-			
 		return "PKL-".$tgl."-".$kd;
+		}			
 	}
-
-
 }

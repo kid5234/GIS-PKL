@@ -27,7 +27,7 @@ class Pkl_c extends CI_Controller {
 
 			//add html for action
 			$row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$pkl->idkelompok."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-			<a class="btn btn-sm btn-danger pull-right" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$pkl->idkelompok."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+			<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$pkl->idkelompok."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
 
 			$data[] = $row;
 		}
@@ -64,8 +64,8 @@ class Pkl_c extends CI_Controller {
 				'pkl_tglawal' => $this->input->post('tglawal'),
 				'pkl_tglakhir' => $this->input->post('tglakhir')
 			);
+			$this->pkl->save($data);
 		}
-		$this->pkl->save($data);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -96,7 +96,7 @@ class Pkl_c extends CI_Controller {
 				$this->pkl->update($id,$mhsdata[$i],$data);
 
 			} else {
-				$data = array(
+				$data= array(
 					'idkelompok' => $id,
 					'mhs_nim' => $mhsdata[$i],
 					'dosen_nip' => $this->input->post('dosen'),

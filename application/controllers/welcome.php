@@ -73,7 +73,7 @@ class Welcome extends CI_Controller {
 		$this->db->where('l.loc_lat !=', NULL)
 				 ->where('l.loc_lang !=', NULL);
 		$q = $this->db->get("pkl_data");
-		print_r($tipe);
+		//print_r($tipe);
 		return $q->result();
 	}
 }
